@@ -11,7 +11,7 @@
 			"path": "AspDotnetVueJs.csproj"
 		}
 	],
-	"shortName": "aspdotnet-vuejs",
+	"shortName": "vue",
 	"sourceName": "AspDotnetVueJs",
 	"sources": [
 		{
