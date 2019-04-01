@@ -1,0 +1,40 @@
+image: Visual Studio 2017
+
+version: 1.0.{build}
+
+install:
+#  - ps: (new-object Net.WebClient).DownloadString("https://raw.github.com/madskristensen/ExtensionScripts/master/AppVeyor/vsix.ps1") | iex
+
+before_build:
+  - ps: write-host Build v. $env:appveyor_build_version 
+  - nuget restore
+#  - ps: Vsix-IncrementVsixVersion | Vsix-UpdateBuildVersion
+
+dotnet_csproj:
+  patch: true
+  file: '**\*.csproj'
+  version: '{version}'
+  package_version: '{version}'
+  assembly_version: '{version}'
+  file_version: '{version}'
+  informational_version: '{version}'
+
+build_script:
+  - msbuild /p:configuration=Release /p:DeployExtension=false /p:ZipPackageCompressionLevel=normal /v:m
+  - ps: (Get-Content AspDotnetVueJs.nuspec).replace('{{version}}', $env:appveyor_build_version ) | Set-Content AspDotnetVueJs.nuspec
+  - nuget pack
+  #Nuget auto-packaging can also be done cref: https://www.appveyor.com/docs/deployment/nuget/
+
+after_build:
+  - ps: Get-ChildItem .\*.nupkg | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
+  - ps: Get-ChildItem .\*.nupkg | % { dotnet new -i $_.FullName }
+  - ps: mkdir demo.dotnetvue
+  - ps: cd demo.dotnetvue
+  - ps: dotnet new vuejs
+  - npm install
+  - ps: dotnet publish demo.picnic.csproj -c release -r win-x86 -o ./output --self-contained
+
+artifacts:
+  - path: demo.dotnetvue\output
+    name: dotnet-vuejs
+
