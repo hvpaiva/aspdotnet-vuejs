@@ -24,8 +24,7 @@ module.exports = {
 	resolve: {
 		extensions: ['.js', '.vue'],
 		alias: {
-			'components': path.resolve(__dirname, '../ClientApp/components'),
-			'pages': path.resolve(__dirname, '../ClientApp/pages')
+			'components': path.resolve(__dirname, '../ClientApp/components')
 		}
 	},
 	optimization: {
@@ -89,14 +88,29 @@ module.exports = {
 					}
 				}
 			},
-			// this will apply to both plain `.css` files
-			// AND `<style>` blocks in `.vue` files
 			{
-				test: /\.(sa|sc|c)ss$/,
+				test: /\.css$/,
+				use: BaseConfig.isProduction ? [MiniCssExtractPlugin.loader, 'css-loader'] : ['style-loader', 'css-loader']
+			},
+			{
+				test: /\.scss$/,
 				use: [
-					BaseConfig.isProduction ? MiniCssExtractPlugin.loader : 'vue-style-loader',
+					'vue-style-loader',
 					'css-loader',
 					'sass-loader'
+				]
+			},
+			{
+				test: /\.sass$/,
+				use: [
+					'vue-style-loader',
+					'css-loader',
+					{
+						loader: 'sass-loader',
+						options: {
+							indentedSyntax: true
+						}
+					}
 				]
 			},
 			{
@@ -110,18 +124,39 @@ module.exports = {
 						}
 					}
 				]
+			},
+			{
+				test: /\.pug$/,
+				loader: 'pug-plain-loader'
+			},
+			{
+				test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/i,
+				use: [
+					{
+						loader: 'url-loader',
+						options: {
+							limit: 4096,
+							fallback: {
+								loader: 'file-loader',
+								options: {
+									name: 'fonts/[name].[hash:8].[ext]'
+								}
+							}
+						}
+					}
+				]
 			}
 		]
 	},
 	plugins: [
 		new VueLoaderPlugin(),
 		new CopyWebpackPlugin([
-			{ from: path.resolve(__dirname, '../ClientApp/static/'), to: '../static/', ignore: ['.*'] },
+			{ from: path.resolve(__dirname, '../ClientApp/static/'), to: '../static/', ignore: ['.*', 'index.html'] },
 			{ from: path.resolve(__dirname, '../ClientApp/favicon.ico'), to: '../favicon.ico', toType: 'file' }
 		], { debug: 'warning' }),
 		new HtmlWebpackPlugin({
 			filename: path.resolve(_rootDir, 'wwwroot/index.html'),
-			template: path.resolve(_rootDir, 'ClientApp/index.html'),
+			template: path.resolve(__dirname, '../ClientApp/index.html'),
 			inject: true,
 			templateParameters: {
 				'baseHref': BaseConfig.baseUriPath

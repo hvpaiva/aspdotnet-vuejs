@@ -14,4 +14,26 @@
 	  <Content Include=".template.config\template.json" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="ClientApp\components\elements" />
+	  <Folder Include="ClientApp\components\layouts" />
+	  <Folder Include="ClientApp\components\views" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <_ContentIncludedByDefault Remove="wwwroot\dist\0.js" />
+	  <_ContentIncludedByDefault Remove="wwwroot\dist\0.js.map" />
+	  <_ContentIncludedByDefault Remove="wwwroot\dist\1.js" />
+	  <_ContentIncludedByDefault Remove="wwwroot\dist\1.js.map" />
+	  <_ContentIncludedByDefault Remove="wwwroot\dist\fonts\element-icons.2fad952a.woff" />
+	  <_ContentIncludedByDefault Remove="wwwroot\dist\fonts\element-icons.6f0a7632.ttf" />
+	  <_ContentIncludedByDefault Remove="wwwroot\dist\main.js" />
+	  <_ContentIncludedByDefault Remove="wwwroot\dist\main.js.map" />
+	  <_ContentIncludedByDefault Remove="wwwroot\dist\vendor.js" />
+	  <_ContentIncludedByDefault Remove="wwwroot\dist\vendor.js.map" />
+	  <_ContentIncludedByDefault Remove="wwwroot\favicon.ico" />
+	  <_ContentIncludedByDefault Remove="wwwroot\index.html" />
+	  <_ContentIncludedByDefault Remove="wwwroot\static\ie-polyfill.min.js" />
+	</ItemGroup>
+
 </Project>

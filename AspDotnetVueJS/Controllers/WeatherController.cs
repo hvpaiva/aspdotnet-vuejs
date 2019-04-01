@@ -1,9 +1,11 @@
 using System.Linq;
+using System.Threading;
 using AspDotnetVueJS.Providers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AspDotnetVueJS.Controllers
 {
+    [Route("api/[controller]")]
     public class WeatherController : ControllerBase
     {
         private readonly IWeatherProvider weatherProvider;
@@ -29,6 +31,8 @@ namespace AspDotnetVueJS.Controllers
                 Total = allForecasts.Count,
                 Forecasts = allForecasts.Skip(from).Take(quantity).ToArray()
             };
+            
+            Thread.Sleep(2000);
 
             return Ok(result);
         }

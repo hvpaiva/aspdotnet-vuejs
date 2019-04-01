@@ -8,5 +8,9 @@ insert_final_newline = true
 trim_trailing_whitespace = true
 indent_size = 4
 
-[*.{js,json,vue,sass,scss,css}]
+[*.{js,json,vue,sass,scss,css,html,pug}]
 indent_style = tab
+
+[*.md]
+max_line_length = off
+trim_trailing_whitespace = false
