@@ -32,7 +32,7 @@ after_build:
   - ps: cd demo.dotnetvue
   - ps: dotnet new vuejs
   - npm install
-  - ps: dotnet publish demo.picnic.csproj -c release -r win-x86 -o ./output --self-contained
+  - ps: dotnet publish demo.dotnetvue.csproj -c release -r win-x86 -o ./output --self-contained
 
 artifacts:
   - path: demo.dotnetvue\output
