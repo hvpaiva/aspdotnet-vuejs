@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspDotnetVueJS", "content\AspDotnetVueJS.csproj", "{E2812626-E5B5-4CE3-AC7F-D07E231BCBD9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspDotnetVueJs", "content\AspDotnetVueJs.csproj", "{8F165E5B-8BA1-4858-B79F-C2FE04050F42}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -8,9 +8,9 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E2812626-E5B5-4CE3-AC7F-D07E231BCBD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E2812626-E5B5-4CE3-AC7F-D07E231BCBD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E2812626-E5B5-4CE3-AC7F-D07E231BCBD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E2812626-E5B5-4CE3-AC7F-D07E231BCBD9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F165E5B-8BA1-4858-B79F-C2FE04050F42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F165E5B-8BA1-4858-B79F-C2FE04050F42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F165E5B-8BA1-4858-B79F-C2FE04050F42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F165E5B-8BA1-4858-B79F-C2FE04050F42}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
