@@ -151,12 +151,12 @@ module.exports = {
 	plugins: [
 		new VueLoaderPlugin(),
 		new CopyWebpackPlugin([
-			{ from: path.resolve(__dirname, '../ClientApp/static/'), to: '../static/', ignore: ['.*', 'index.html'] },
+			{ from: path.resolve(__dirname, '../ClientApp/static/'), to: '../static/', ignore: ['.*'] },
 			{ from: path.resolve(__dirname, '../ClientApp/favicon.ico'), to: '../favicon.ico', toType: 'file' }
 		], { debug: 'warning' }),
 		new HtmlWebpackPlugin({
 			filename: path.resolve(_rootDir, 'wwwroot/index.html'),
-			template: path.resolve(__dirname, '../ClientApp/index.html'),
+			template: path.resolve(_rootDir, 'ClientApp/index.html'),
 			inject: true,
 			templateParameters: {
 				'baseHref': BaseConfig.baseUriPath
@@ -166,8 +166,7 @@ module.exports = {
 		new MiniCssExtractPlugin({
 			filename: !BaseConfig.isProduction ? 'css/[name].css' : 'css/[name].[hash].css'
 		})
-	] : [
-	]).concat(BaseConfig.generateMapFiles ? [
+	] : []).concat(BaseConfig.generateMapFiles ? [
 		new webpack.SourceMapDevToolPlugin({
 			filename: '[file].map', // Remove this line if you prefer inline source maps
 			moduleFilenameTemplate: path.relative(bundleOutputDir, '[resourcePath]') // Point sourcemap entries to the original file locations on disk

@@ -1,5 +1,5 @@
 module.exports = {
 	// Override default configuration such as
-	// baseUriPath: '/'
+	baseUriPath: '/',
 	generateMapFiles: true
 };
