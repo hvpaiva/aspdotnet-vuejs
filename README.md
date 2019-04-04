@@ -52,7 +52,7 @@ This template is inspired and adapted from [Mark Pieszak's project](https://gith
 - Vue-i18n *
 - Vee-validate *
 
-\* Work In Progress
+\* Work In Progress. Available in future releases.
 
 ## Installation
 To download and install the template, just type:
