@@ -3,7 +3,7 @@
 		h2.title {{ title }}
 		el-menu(mode="horizontal" :default-active='activeRouter' :router="true")
 			el-menu-item(
-				v-for="(route, index) in routes"
+				v-for="(route, index) in displayedRoutes"
 				:key="index"
 				:index="route.name"
 				:route="route"
@@ -35,6 +35,10 @@ export default {
 	computed: {
 		activeRouter() {
 			return this.$route.name;
+		},
+
+		displayedRoutes() {
+			return this.routes.filter(r => r.display);
 		}
 	}
 };

@@ -1,4 +1,5 @@
 import Home from '../components/views/Home';
+import NotFound from '../components/views/NotFound';
 
 const routes = [
 	{
@@ -21,7 +22,9 @@ const routes = [
 		component: () => import('../components/views/WeatherForecast'),
 		display: 'Weather forecast',
 		icon: 'list'
-	}
+	},
+	{ name: '404', path: '/404', component: NotFound },
+	{ name: 'catchAll', path: '*', redirect: '/404' }
 ];
 
 export default routes;
