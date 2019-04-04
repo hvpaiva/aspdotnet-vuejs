@@ -1,5 +1,5 @@
 [![NuGet](https://img.shields.io/nuget/v/aspdotnet-vuejs.svg)](https://www.nuget.org/packages/aspdotnet-vuejs/)
-[![Build status](https://ci.appveyor.com/api/projects/status/okfn33vwyff1xb3h/branch/master?svg=true)](https://ci.appveyor.com/project/hvpaiva/aspdotnet-vuejs/branch/master)
+[![Build status](https://ci.appveyor.com/api/projects/status/kutcm6fkukd1cx71/branch/master?svg=true)](https://ci.appveyor.com/project/hvpaiva/aspdotnet-vuejs/branch/master)
 
 # <img src="https://github.com/hvpaiva/aspdotnet-vuejs/raw/master/content/ClientApp/favicon.ico" height="30" /> Dotnet Core 2.2 + VueJs
 
