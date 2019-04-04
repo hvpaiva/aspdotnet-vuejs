@@ -29,7 +29,8 @@ namespace AspDotnetVueJS
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v2.1.0", new Info {
+                c.SwaggerDoc("v2.1.0", new Info
+                {
                     Title = "AspDotnetVueJs API",
                     Description = "A simple example Core Web API",
                     TermsOfService = "None",
@@ -93,10 +94,7 @@ namespace AspDotnetVueJS
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v2.1.0/swagger.json", "AspDotnetVueJs 2.1.0");
-            });
+            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v2.1.0/swagger.json", "AspDotnetVueJs 2.1.0"); });
 
             // Idea: https://code.msdn.microsoft.com/How-to-fix-the-routing-225ac90f
             // This avoid having a real mvc view. You have other way of doing, but this one works

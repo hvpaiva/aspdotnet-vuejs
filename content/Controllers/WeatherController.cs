@@ -12,7 +12,7 @@ namespace AspDotnetVueJS.Controllers
 
         public WeatherController(IWeatherProvider weatherProvider)
         {
-            this._weatherProvider = weatherProvider;
+            _weatherProvider = weatherProvider;
         }
 
         [HttpGet("[action]")]
@@ -31,7 +31,7 @@ namespace AspDotnetVueJS.Controllers
                 Total = allForecasts.Count,
                 Forecasts = allForecasts.Skip(from).Take(quantity).ToArray()
             };
-            
+
             Thread.Sleep(2000);
 
             return Ok(result);
