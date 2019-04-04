@@ -8,11 +8,11 @@ namespace AspDotnetVueJS.Controllers
     [Route("api/[controller]")]
     public class WeatherController : ControllerBase
     {
-        private readonly IWeatherProvider weatherProvider;
+        private readonly IWeatherProvider _weatherProvider;
 
         public WeatherController(IWeatherProvider weatherProvider)
         {
-            this.weatherProvider = weatherProvider;
+            this._weatherProvider = weatherProvider;
         }
 
         [HttpGet("[action]")]
@@ -25,7 +25,7 @@ namespace AspDotnetVueJS.Controllers
 
             if (from < 0) return BadRequest("You cannot go in the negative with the 'from' parameter");
 
-            var allForecasts = weatherProvider.GetForecasts();
+            var allForecasts = _weatherProvider.GetForecasts();
             var result = new
             {
                 Total = allForecasts.Count,
