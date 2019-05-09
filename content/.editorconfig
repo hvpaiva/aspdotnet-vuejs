@@ -1,16 +1,149 @@
-root = true
-
 [*]
 charset = utf-8
 end_of_line = lf
+trim_trailing_whitespace = false
+insert_final_newline = false
 indent_style = space
-insert_final_newline = true
-trim_trailing_whitespace = true
 indent_size = 4
 
-[*.{js,json,vue,sass,scss,css,html,pug}]
-indent_style = tab
+# Microsoft .NET properties
+csharp_new_line_before_members_in_object_initializers = false
+csharp_preferred_modifier_order = public, private, protected, internal, new, abstract, virtual, sealed, override, static, readonly, extern, unsafe, volatile, async:suggestion
+csharp_style_var_elsewhere = true:hint
+csharp_style_var_for_built_in_types = true:hint
+csharp_style_var_when_type_is_apparent = true:hint
+dotnet_style_predefined_type_for_locals_parameters_members = true:hint
+dotnet_style_predefined_type_for_member_access = true:hint
+dotnet_style_qualification_for_event = false:warning
+dotnet_style_qualification_for_field = false:warning
+dotnet_style_qualification_for_method = false:warning
+dotnet_style_qualification_for_property = false:warning
+dotnet_style_require_accessibility_modifiers = for_non_interface_members:hint
 
-[*.md]
-max_line_length = off
-trim_trailing_whitespace = false
+# ReSharper properties
+resharper_autodetect_indent_settings = true
+resharper_use_indent_from_vs = false
+
+# ReSharper inspection severities
+resharper_bad_attribute_brackets_spaces_highlighting = warning
+resharper_bad_braces_spaces_highlighting = warning
+resharper_bad_colon_spaces_highlighting = warning
+resharper_bad_comma_spaces_highlighting = warning
+resharper_bad_control_braces_line_breaks_highlighting = warning
+resharper_bad_declaration_braces_indent_highlighting = warning
+resharper_bad_declaration_braces_line_breaks_highlighting = warning
+resharper_bad_empty_braces_line_breaks_highlighting = warning
+resharper_bad_expression_braces_indent_highlighting = warning
+resharper_bad_expression_braces_line_breaks_highlighting = warning
+resharper_bad_generic_brackets_spaces_highlighting = warning
+resharper_bad_indent_highlighting = warning
+resharper_bad_linq_line_breaks_highlighting = warning
+resharper_bad_list_line_breaks_highlighting = warning
+resharper_bad_member_access_spaces_highlighting = warning
+resharper_bad_namespace_braces_indent_highlighting = warning
+resharper_bad_parens_line_breaks_highlighting = warning
+resharper_bad_parens_spaces_highlighting = warning
+resharper_bad_preprocessor_indent_highlighting = warning
+resharper_bad_semicolon_spaces_highlighting = warning
+resharper_bad_spaces_after_keyword_highlighting = warning
+resharper_bad_square_brackets_spaces_highlighting = warning
+resharper_bad_switch_braces_indent_highlighting = warning
+resharper_bad_symbol_spaces_highlighting = warning
+resharper_class_never_instantiated_global_highlighting = none
+resharper_incorrect_blank_lines_near_braces_highlighting = warning
+resharper_missing_blank_lines_highlighting = warning
+resharper_missing_indent_highlighting = warning
+resharper_missing_linebreak_highlighting = warning
+resharper_missing_space_highlighting = warning
+resharper_multiple_spaces_highlighting = warning
+resharper_multiple_statements_on_one_line_highlighting = warning
+resharper_multiple_type_members_on_one_line_highlighting = warning
+resharper_outdent_is_off_prev_level_highlighting = warning
+resharper_redundant_blank_lines_highlighting = warning
+resharper_redundant_linebreak_highlighting = warning
+resharper_redundant_space_highlighting = warning
+resharper_tabs_and_spaces_mismatch_highlighting = warning
+resharper_tabs_outside_indent_highlighting = warning
+resharper_unused_member_global_highlighting = none
+resharper_unused_parameter_global_highlighting = none
+resharper_web_config_module_not_resolved_highlighting = warning
+resharper_web_config_type_not_resolved_highlighting = warning
+resharper_web_config_wrong_module_highlighting = warning
+resharper_wrong_indent_size_highlighting = warning
+
+[{*.sht, *.html, *.shtm, *.shtml, *.ng, *.htm}]
+indent_style = tab
+tab_width = 4
+
+[*.svg]
+indent_style = tab
+tab_width = 4
+
+[{.babelrc, .stylelintrc, jest.config, *.uplugin, *.uproject, *.bowerrc, *.jsb3, *.jsb2, *.json}]
+indent_style = tab
+tab_width = 4
+
+[{*.targets, *.overridetasks, *.tasks}]
+indent_style = tab
+tab_width = 4
+
+[{*.csproj, *.ccproj, *.androidproj}]
+indent_style = tab
+tab_width = 4
+
+[{*.vcxitems, *.vcxproj}]
+indent_style = tab
+tab_width = 4
+
+[*.css]
+indent_style = tab
+tab_width = 4
+
+[*.less]
+indent_style = space
+indent_size = 2
+
+[*.sass]
+indent_style = tab
+tab_width = 4
+
+[*.scss]
+indent_style = tab
+tab_width = 4
+
+[{*.cjs, *.js}]
+indent_style = tab
+tab_width = 4
+
+[{*.ats, *.ts}]
+indent_style = tab
+tab_width = 4
+
+[{tsconfig.lib.json, tsconfig.spec.json, tsconfig.app.json, tsconfig.json, tsconfig.e2e.json}]
+indent_style = tab
+tab_width = 4
+
+[*.js.map]
+indent_style = tab
+tab_width = 4
+
+[{*.pug, *.jade}]
+indent_style = tab
+tab_width = 4
+
+[*.vue]
+indent_style = tab
+tab_width = 4
+
+[{*.yml, *.yaml}]
+indent_style = space
+indent_size = 2
+
+[.eslintrc]
+indent_style = tab
+tab_width = 4
+
+[*.{appxmanifest, asax, ascx, aspx, build, config, cs, cshtml, csproj, dbml, discomap, dtd, fs, fsi, fsscript, fsx, htm, html, jsproj, lsproj, master, ml, mli, njsproj, nuspec, proj, props, razor, resw, resx, skin, StyleCop, targets, tasks, vb, vbproj, xaml, xamlx, xml, xoml, xsd}]
+indent_style = space
+indent_size = 4
+tab_width = 4

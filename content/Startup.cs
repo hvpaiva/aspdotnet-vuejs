@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.IO.Compression;
 using System.Reflection;
-using AspDotnetVueJS.Extensions;
+using AspDotnetVueJs.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +11,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
 
-namespace AspDotnetVueJS
+[assembly: ApiConventionType(typeof(DefaultApiConventions))]
+
+namespace AspDotnetVueJs
 {
     public class Startup
     {
@@ -20,43 +22,41 @@ namespace AspDotnetVueJS
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        public static IConfiguration Configuration { get; private set; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services
+                .AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v2.1.0", new Info
+                c.SwaggerDoc("v1", new Info
                 {
-                    Title = "AspDotnetVueJs API",
-                    Description = "A simple example Core Web API",
-                    TermsOfService = "None",
-                    Version = "v2.1.0",
-                    Contact = new Contact
-                    {
-                        Name = "Highlander Paiva",
-                        Email = string.Empty,
-                        Url = "https://hvpaiva.com"
-                    },
-                    License = new License
-                    {
-                        Name = "MIT",
-                        Url = "https://github.com/hvpaiva/aspdotnet-vuejs/blob/master/LICENSE"
-                    }
+                    Title = Configuration["App:Title"],
+                    Description = Configuration["App:Description"],
+                    TermsOfService = Configuration["App:TermsOfService"],
+                    Version = Configuration["App:Version"]
                 });
 
-                // Set the comments path for the Swagger JSON and UI.
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                var xmlPath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), xmlFile);
+                var xmlPath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location), xmlFile);
                 c.IncludeXmlComments(xmlPath);
             });
 
-            // Enable the Gzip compression especially for Kestrel
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials());
+            });
+
             services.Configure<GzipCompressionProviderOptions>(options =>
                 options.Level = CompressionLevel.Optimal);
+
             services.AddResponseCompression(options =>
             {
 #if (!NoHttps)
@@ -70,7 +70,6 @@ namespace AspDotnetVueJS
             services.AddWeather();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
@@ -88,18 +87,19 @@ namespace AspDotnetVueJS
 #else
             }
 #endif
+            app.UseCors("CorsPolicy");
 
-            app.UseResponseCompression(); // No need if you use IIS, but really something good for Kestrel!
+            app.UseResponseCompression();
 
-            // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
-            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
-            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v2.1.0/swagger.json", "AspDotnetVueJs 2.1.0"); });
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint(
+                    $"{Configuration["BaseUriPath"]}/swagger/v1/swagger.json",
+                    $"{Configuration["App:Title"]} {Configuration["App:Version"]}"
+                );
+            });
 
-            // Idea: https://code.msdn.microsoft.com/How-to-fix-the-routing-225ac90f
-            // This avoid having a real mvc view. You have other way of doing, but this one works
-            // properly.
-            // app.UseSpa();
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
@@ -119,7 +119,7 @@ namespace AspDotnetVueJS
                         new WebpackDevMiddlewareOptions
                         {
                             HotModuleReplacement = true,
-                            ConfigFile = "./build/webpack.config.js"
+                            ConfigFile = "./ClientApp/build/webpack.config.js"
                         });
             });
         }

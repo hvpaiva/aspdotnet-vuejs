@@ -5,7 +5,7 @@
 
 This project main idea is to provide an easy way to start a new project using .Net Core WebAPI in server side and VueJs in the client side. For this goal, we setup the main configuration to enable this integration using some utilities as hot reloading and some frontend libraries as Element-UI and FontAwesome.
 
-Our goal is to provide an simple SPA with minimum dependencies and performance issues. The VueJs is configured with Vuex and Vue Router, but this can be removed if you don't feel it meets your requirement. The same goes for the component library. In this template, we also provide examples with the main functionalits.
+Our goal is to provide a simple SPA with minimum dependencies and performance issues. The VueJs is configured with Vuex and Vue Router, but this can be removed if you don't feel it meets your requirement. The same goes for the component library. In this template, we also provide examples with the main functionalits.
 
 This template is inspired and adapted from [Mark Pieszak's project](https://github.com/MarkPieszak/aspnetcore-Vue-starter) and [Nordes' project](https://github.com/Nordes/HoNoSoFt.DotNet.Web.Spa.ProjectTemplates).
 

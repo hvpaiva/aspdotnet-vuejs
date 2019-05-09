@@ -11,10 +11,10 @@ import { FontAwesomeIcon } from './icons';
 import { sync } from 'vuex-router-sync';
 import axios from 'axios';
 import ElementUI from 'element-ui';
-import locale from 'element-ui/lib/locale/lang/en'
+import locale from 'element-ui/lib/locale/lang/en';
 
 // CSS imports
-import './styles/main.sass'
+import './styles/main.sass';
 
 // Configurations
 Vue.use(ElementUI, { locale });

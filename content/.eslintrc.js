@@ -22,13 +22,14 @@ module.exports = {
 		'object-curly-newline': ["error", { "consistent": true }],
 		'unicode-bom': 0,
 		'import/no-unresolved': 0,
-		'vue/script-indent': ['error', "tab", { 'baseIndent': 0 }],
+		'vue/script-indent': ['error', "tab", { 'baseIndent': 0 , "switchCase": 1}],
 		'vue/html-indent': ['error', "tab", { 'baseIndent': 1 }],
 		'no-tabs': 0,
-		"indent": ["error", "tab"],
+		"indent": ["error", "tab", { "SwitchCase": 1 }],
 		"no-mixed-operators": 0,
 		"import/prefer-default-export": 0,
 		"no-use-before-define": 0,
-		"no-plusplus": 0
+		"no-plusplus": 0,
+		"no-mixed-spaces-and-tabs": ["error", "smart-tabs"],
 	}
 };

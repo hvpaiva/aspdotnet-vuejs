@@ -1,7 +1,7 @@
-using AspDotnetVueJS.Providers;
+using AspDotnetVueJs.Providers;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace AspDotnetVueJS.Extensions
+namespace AspDotnetVueJs.Extensions
 {
     public static class ServiceCollectionExtensions
     {

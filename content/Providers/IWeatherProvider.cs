@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using AspDotnetVueJS.Models;
+using AspDotnetVueJs.Models;
 
-namespace AspDotnetVueJS.Providers
+namespace AspDotnetVueJs.Providers
 {
     public interface IWeatherProvider
     {

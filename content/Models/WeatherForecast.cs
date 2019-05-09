@@ -1,4 +1,4 @@
-namespace AspDotnetVueJS.Models
+namespace AspDotnetVueJs.Models
 {
     public class WeatherForecast
     {

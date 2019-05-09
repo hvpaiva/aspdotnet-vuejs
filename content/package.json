@@ -7,7 +7,9 @@
 	},
 	"license": "MIT",
 	"scripts": {
-		"build": "webpack --config build/webpack.config.js --hide-modules --progress",
+		"build": "webpack --config ./ClientApp/build/webpack.config.js --hide-modules --progress --colors",
+		"build:dev": "NODE_ENV=development npm run build",
+		"build:prod": "NODE_ENV=production npm run build",
 		"lint": "eslint ./ClientApp/ --ext .js,.vue --fix"
 	},
 	"dependencies": {

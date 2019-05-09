@@ -1,9 +1,9 @@
 using System.Linq;
 using System.Threading;
-using AspDotnetVueJS.Providers;
+using AspDotnetVueJs.Providers;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AspDotnetVueJS.Controllers
+namespace AspDotnetVueJs.Controllers
 {
     [Route("api/[controller]")]
     public class WeatherController : ControllerBase

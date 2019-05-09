@@ -1,5 +1,5 @@
-'use strict';
 const path = require('path');
+const fs = require('fs');
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
@@ -7,24 +7,43 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const BaseConfig = require('./base.config');
 const rimraf = require('rimraf');
-let _rootDir = path.resolve(__dirname, '..');
+const BaseConfig = require('./base.config');
+const AppConfig = require('../../appsettings');
+const LaunchConfig = require('../../Properties/launchSettings');
 
-const bundleOutputDir = './wwwroot/dist';
+const rootDir = path.resolve(__dirname, '../..');
+
+const bundleOutputDir = path.resolve(rootDir, './wwwroot/dist');
 
 console.info(`Building for production: ${BaseConfig.isProduction}`);
-rimraf.sync(path.resolve(_rootDir, 'wwwroot/**/*'), { silent: true });
+rimraf.sync(path.resolve(rootDir, 'wwwroot/**/*'), { silent: true });
+
+if (!BaseConfig.isProduction) {
+	fs.createReadStream(path.resolve(rootDir, 'ClientApp/build/publishingLoader.html'))
+		.pipe(fs.createWriteStream(path.resolve(rootDir, 'wwwroot/index.html')));
+}
+
+console.info(BaseConfig);
 
 module.exports = {
 	name: 'app',
+	devServer: {
+		proxy: {
+			'^/api': {
+				target: LaunchConfig.profiles.AspDotnetVueJS.applicationUrl,
+				ws: true,
+				changeOrigin: true
+			}
+		}
+	},
 	mode: BaseConfig.isProduction ? 'production' : 'development',
 	stats: BaseConfig.isProduction ? 'errors-only' : 'normal',
-	entry: { 'main': './ClientApp/app.js' }, // 'polyfill': "@babel/polyfill" could also be added here.
+	entry: { main: path.resolve(rootDir, './ClientApp/app.js') },
 	resolve: {
 		extensions: ['.js', '.vue'],
 		alias: {
-			'components': path.resolve(__dirname, '../ClientApp/components')
+			components: path.resolve(rootDir, './ClientApp/components')
 		}
 	},
 	optimization: {
@@ -34,8 +53,8 @@ module.exports = {
 					chunks: 'initial',
 					name: 'site',
 					minChunks: 2,
-					maxInitialRequests: 5, // The default limit is too small to showcase the effect
-					minSize: 0 // This is example is too small to create commons chunks
+					maxInitialRequests: 5,
+					minSize: 0
 				},
 				vendor: {
 					test: /node_modules/,
@@ -47,23 +66,25 @@ module.exports = {
 			}
 		},
 		minimizer: [
-			new UglifyJsPlugin({
-				cache: true,
-				parallel: true,
-				sourceMap: BaseConfig.generateMapFiles // set to true if you want JS source maps
-			}),
+			new UglifyJsPlugin(
+				{
+					cache: true,
+					parallel: true,
+					sourceMap: !BaseConfig.isProduction
+				}
+			),
 			new OptimizeCSSAssetsPlugin({})
 		],
 		nodeEnv: BaseConfig.isProduction ? 'production' : 'development'
 	},
 	output: {
-		path: path.resolve(_rootDir, 'wwwroot/dist'),
+		path: path.resolve(rootDir, './wwwroot/dist'),
 		filename: !BaseConfig.isProduction ? '[name].js' : '[name].[hash].js',
 		// publicPath: In production we don't use webpack hot reload, so it should be alright.
-		// the usage of the ./ at the beginning is for the basePath to be properly used. See
+		// the usage of the  at the beginning is for the basePath to be properly used. See
 		// BaseConfig.baseUriPath. The webpack hot reload require the official URI path or you
 		// will get errors in your console.
-		publicPath: BaseConfig.isProduction ? './dist/' : '/dist/'
+		publicPath: BaseConfig.isProduction ? `.${BaseConfig.baseUriPath}/dist/` : '/dist/'
 	},
 	module: {
 		rules: [
@@ -80,7 +101,7 @@ module.exports = {
 				use: {
 					loader: 'babel-loader',
 					options: {
-						presets: [['@babel/preset-env', { 'modules': false }]],
+						presets: [['@babel/preset-env', { modules: false }]],
 						plugins: [
 							'@babel/plugin-transform-runtime',
 							'@babel/plugin-transform-async-to-generator'
@@ -90,7 +111,13 @@ module.exports = {
 			},
 			{
 				test: /\.css$/,
-				use: BaseConfig.isProduction ? [MiniCssExtractPlugin.loader, 'css-loader'] : ['style-loader', 'css-loader']
+				use: BaseConfig.isProduction
+					? [MiniCssExtractPlugin.loader, 'css-loader']
+					: ['style-loader', 'css-loader']
+			},
+			{
+				test: /\.svg$/,
+				loader: 'svg-inline-loader'
 			},
 			{
 				test: /\.scss$/,
@@ -150,26 +177,54 @@ module.exports = {
 	},
 	plugins: [
 		new VueLoaderPlugin(),
-		new CopyWebpackPlugin([
-			{ from: path.resolve(__dirname, '../ClientApp/static/'), to: '../static/', ignore: ['.*'] },
-			{ from: path.resolve(__dirname, '../ClientApp/favicon.ico'), to: '../favicon.ico', toType: 'file' }
-		], { debug: 'warning' }),
-		new HtmlWebpackPlugin({
-			filename: path.resolve(_rootDir, 'wwwroot/index.html'),
-			template: path.resolve(_rootDir, 'ClientApp/index.html'),
-			inject: true,
-			templateParameters: {
-				'baseHref': BaseConfig.baseUriPath
+		new webpack.DefinePlugin(
+			{
+				'process.env': {
+					BASE_URL: JSON.stringify(BaseConfig.baseUriPath)
+				}
 			}
-		})
+		),
+		new CopyWebpackPlugin(
+			[
+				{
+					from: path.resolve(rootDir, 'ClientApp/static/'),
+					to: '../static/',
+					ignore: ['.*']
+				},
+				{
+					from: path.resolve(rootDir, 'ClientApp/favicon.ico'),
+					to: '../favicon.ico',
+					toType: 'file'
+				}
+			],
+			{ debug: 'warning' }
+		),
+		new HtmlWebpackPlugin(
+			{
+				filename: path.resolve(rootDir, 'wwwroot/index.html'),
+				template: path.resolve(rootDir, 'ClientApp/index.html'),
+				inject: true,
+				templateParameters: {
+					baseHref: BaseConfig.baseUriPath,
+					appName: AppConfig.App.Title
+				}
+			}
+		)
 	].concat(BaseConfig.isProduction ? [
-		new MiniCssExtractPlugin({
-			filename: !BaseConfig.isProduction ? 'css/[name].css' : 'css/[name].[hash].css'
-		})
-	] : []).concat(BaseConfig.generateMapFiles ? [
-		new webpack.SourceMapDevToolPlugin({
-			filename: '[file].map', // Remove this line if you prefer inline source maps
-			moduleFilenameTemplate: path.relative(bundleOutputDir, '[resourcePath]') // Point sourcemap entries to the original file locations on disk
-		})
+		new MiniCssExtractPlugin(
+			{
+				filename: !BaseConfig.isProduction
+					? 'css/[name].css'
+					: 'css/[name].[hash].css'
+			}
+		)
 	] : [])
+		.concat(BaseConfig.generateMapFiles ? [
+			new webpack.SourceMapDevToolPlugin(
+				{
+					filename: '[file].map',
+					moduleFilenameTemplate: path.relative(bundleOutputDir, '[resourcePath]')
+				}
+			)
+		] : [])
 };
