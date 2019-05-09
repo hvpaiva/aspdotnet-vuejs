@@ -1,12 +1,12 @@
 image: Visual Studio 2017
 
-version: 2.0.{build}
+version: 3.0.{build}
 
 install:
 #  - ps: (new-object Net.WebClient).DownloadString("https://raw.github.com/madskristensen/ExtensionScripts/master/AppVeyor/vsix.ps1") | iex
 
 before_build:
-  - ps: write-host Build v. $env:appveyor_build_version 
+  - ps: write-host Build v. $env:appveyor_build_version
   - nuget restore
 #  - ps: Vsix-IncrementVsixVersion | Vsix-UpdateBuildVersion
 
@@ -21,6 +21,7 @@ dotnet_csproj:
 
 build_script:
   - msbuild /p:configuration=Release /p:DeployExtension=false /p:ZipPackageCompressionLevel=normal /v:m
+  - ps: (Get-Content appsettings.json).replace('{{version}}', $env:appveyor_build_version ) | Set-Content appsettings.json
   - ps: (Get-Content AspDotnetVueJs.nuspec).replace('{{version}}', $env:appveyor_build_version ) | Set-Content AspDotnetVueJs.nuspec
   - nuget pack
   #Nuget auto-packaging can also be done cref: https://www.appveyor.com/docs/deployment/nuget/

@@ -10,7 +10,7 @@
     <packageTypes>
       <packageType name="Template" />
     </packageTypes>
-    <version>2.1.0</version>
+    <version>{{version}}</version>
     <!--<iconUrl></iconUrl>-->
     <projectUrl>https://github.com/hvpaiva/aspdotnet-vuejs</projectUrl>
     <licenseUrl>https://github.com/hvpaiva/aspdotnet-vuejs/blob/master/LICENSE</licenseUrl>
