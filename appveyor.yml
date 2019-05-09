@@ -21,7 +21,6 @@ dotnet_csproj:
 
 build_script:
   - msbuild /p:configuration=Release /p:DeployExtension=false /p:ZipPackageCompressionLevel=normal /v:m
-  - ps: (Get-Content appsettings.json).replace('{{version}}', $env:appveyor_build_version ) | Set-Content appsettings.json
   - ps: (Get-Content AspDotnetVueJs.nuspec).replace('{{version}}', $env:appveyor_build_version ) | Set-Content AspDotnetVueJs.nuspec
   - nuget pack
   #Nuget auto-packaging can also be done cref: https://www.appveyor.com/docs/deployment/nuget/

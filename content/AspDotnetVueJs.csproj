@@ -62,9 +62,6 @@
         <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
         <Exec Command="node -e &quot;console.log('NPM Installing dependencies...')&quot;" />
         <Exec Command="npm install" />
-        <Exec Command="npm run build -- --prod" />
-        <Exec Command="node -e &quot;console.log('NPM Installing dependencies...')&quot;" />
-        <Exec Command="npm install" />
         <Exec Command="node -e &quot;console.log('Building in $(Configuration) mode')&quot;" />
         <Exec Condition=" '$(Configuration)' == 'Production' " Command="npm run build:prod" />
         <Exec Condition=" '$(Configuration)' == 'Test' " Command="npm run build:test" />
