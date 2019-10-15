@@ -1,4 +1,5 @@
-﻿using System.IO;
+using System;
+using System.IO;
 using System.IO.Compression;
 using System.Reflection;
 using AspDotnetVueJs.Extensions;
@@ -9,7 +10,9 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Swashbuckle.AspNetCore.Swagger;
+
 
 [assembly: ApiConventionType(typeof(DefaultApiConventions))]
 
@@ -27,16 +30,16 @@ namespace AspDotnetVueJs
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+                .AddMvc().AddNewtonsoftJson()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info
+                c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
                 {
                     Title = Configuration["App:Title"],
                     Description = Configuration["App:Description"],
-                    TermsOfService = Configuration["App:TermsOfService"],
+                    TermsOfService = new Uri(Configuration["App:TermsOfService"]),
                     Version = Configuration["App:Version"]
                 });
 
@@ -47,11 +50,16 @@ namespace AspDotnetVueJs
 
             services.AddCors(options =>
             {
+                /*
+                 Specifying AllowAnyOrigin and AllowCredentials is an insecure configuration and can result in cross-site request forgery. 
+                 The CORS service returns an invalid CORS response when an app is configured with both methods.
+                 */
                 options.AddPolicy("CorsPolicy",
                     builder => builder.AllowAnyOrigin()
-                        .AllowAnyMethod()
-                        .AllowAnyHeader()
-                        .AllowCredentials());
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    //.AllowCredentials()
+                    );
             });
 
             services.Configure<GzipCompressionProviderOptions>(options =>
@@ -70,7 +78,8 @@ namespace AspDotnetVueJs
             services.AddWeather();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        [System.Obsolete]
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -87,7 +96,6 @@ namespace AspDotnetVueJs
 #else
             }
 #endif
-            app.UseCors("CorsPolicy");
 
             app.UseResponseCompression();
 
@@ -103,11 +111,13 @@ namespace AspDotnetVueJs
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
-            app.UseMvc(routes =>
+            app.UseRouting();
+            app.UseCors("CorsPolicy");
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(
-                    "default",
-                    "{controller}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute(
+                  name: "default",
+                  pattern: "{controller}/{action=Index}/{id?}");
             });
 
             app.UseSpa(spa =>

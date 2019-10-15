@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Threading;
 using AspDotnetVueJs.Providers;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AspDotnetVueJs.Controllers
