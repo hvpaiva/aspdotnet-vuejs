@@ -12,7 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Swashbuckle.AspNetCore.Swagger;
-
+using Westwind.AspNetCore.LiveReload;
 
 [assembly: ApiConventionType(typeof(DefaultApiConventions))]
 
@@ -29,6 +29,10 @@ namespace AspDotnetVueJs
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddLiveReload(config =>
+            {
+            });
+
             services
                 .AddMvc().AddNewtonsoftJson()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
@@ -83,6 +87,7 @@ namespace AspDotnetVueJs
         {
             if (env.IsDevelopment())
             {
+                app.UseLiveReload();
                 app.UseDeveloperExceptionPage();
             }
             else
@@ -97,7 +102,7 @@ namespace AspDotnetVueJs
             }
 #endif
 
-            app.UseResponseCompression();
+            //app.UseResponseCompression();
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
@@ -108,7 +113,7 @@ namespace AspDotnetVueJs
                 );
             });
 
-            app.UseDefaultFiles();
+            //app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
             app.UseRouting();
