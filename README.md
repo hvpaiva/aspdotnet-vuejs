@@ -1,7 +1,7 @@
 [![NuGet](https://img.shields.io/nuget/v/aspdotnet-vuejs.svg)](https://www.nuget.org/packages/aspdotnet-vuejs/)
 [![Build status](https://ci.appveyor.com/api/projects/status/kutcm6fkukd1cx71/branch/master?svg=true)](https://ci.appveyor.com/project/hvpaiva/aspdotnet-vuejs/branch/master)
 
-# <img src="https://github.com/hvpaiva/aspdotnet-vuejs/raw/master/content/ClientApp/favicon.ico" height="30" /> Dotnet Core 2.2 + VueJs
+# <img src="https://github.com/hvpaiva/aspdotnet-vuejs/raw/master/content/ClientApp/favicon.ico" height="30" /> Dotnet Core 2.3 + VueJs
 
 This project main idea is to provide an easy way to start a new project using .Net Core WebAPI in server side and VueJs in the client side. For this goal, we setup the main configuration to enable this integration using some utilities as hot reloading and some frontend libraries as Element-UI and FontAwesome.
 
@@ -40,7 +40,7 @@ This template is inspired and adapted from [Mark Pieszak's project](https://gith
 
 ## Technology inside
 
-- .Net Core 2.2
+- .Net Core 3.0
 - VueJs
 - Webpack 4
 - Element UI
@@ -51,6 +51,7 @@ This template is inspired and adapted from [Mark Pieszak's project](https://gith
 - Swagger *
 - Vue-i18n *
 - Vee-validate *
+- LiveReload *
 
 \* Work In Progress. Available in future releases.
 
