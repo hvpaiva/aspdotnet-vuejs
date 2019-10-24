@@ -256,3 +256,4 @@ _Pvt_Extensions
 .fake/
 
 .vscode/
+/content/wwwroot
